@@ -10,17 +10,28 @@ bool strcmp_check(const char *line, const char *sub_str){
         if (line[i] != sub_str[i]){
             printf("%s 匹配失败!\n", line);
             return false;
+        }else{
+            printf("%s 匹配成功!\n", line);
         }
     }
     return true;
 }
 
-struct keyword_list{
-
-};
-
-bool strcmp_check_list(const char *line, char *result){
-    
+/**
+ * 当存在几个关键词出现在同一句短语内的时候，则判断成立。
+ * */
+bool strcmp_check_list(const char *line, char *sub_str){
+    int sp_count_length = count(sub_str, " ")+1;
+    // 首先分割匹配字符串
+    char *result[sp_count_length];
+    split(sub_str, " ", result);
+    // 然后将关键词逐个进行匹配，如果有一个未出现在短句中，则判断匹配失败！
+    for(size_t i = 0; i < sp_count_length; i++)
+    {
+        if (count(line, result[i]) == 0)
+            return false;
+    }
+    return true;
 }
 
 bool Greetings(const char *line, char *result){
@@ -36,5 +47,9 @@ bool Greetings(const char *line, char *result){
         strcpy(result, "您好！在的");
         return true;
     };
+    if (strcmp_check_list(line, "鲜花 价格 多少")){
+        strcpy(result, "三角梅，50元一株带花盆");
+        return true;
+    }
     return false;
 }

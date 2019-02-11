@@ -19,7 +19,7 @@ void analysis()
 
 void string_split_for(){
   char str[] = "hello 那你干嘛 好的 我很喜欢这种花 因为它很beautiful!";
-  char *result[5];
+  char *result[count(str, " ")+1];
   int length = split(str, " ", result);
   
   for(int i = 0; i < length; i++)
@@ -46,5 +46,5 @@ void string_count(){
 }
 
 void main(){
-  string_split_for();
+  analysis();
 }

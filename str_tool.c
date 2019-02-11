@@ -66,7 +66,7 @@ void clear_string(char * result){
   memset(result, 0, sizeof(result));  
 }
 
-void substring(char *src, int start, int end, char *result){
+void substring(const char *src, int start, int end, char *result){
   clear_string(result);
   size_t index = 0;
   for(int i = start; i < end; i++)
@@ -78,7 +78,7 @@ void substring(char *src, int start, int end, char *result){
   result[ index ] = '\0';
 }
 
-int count(char *src, const char *delim){
+int count(const char *src, const char *delim){
   char spr[500];
   sprintf(spr, "src: %s, delim: %s", src, delim);
   debug("count", spr);
@@ -88,6 +88,8 @@ int count(char *src, const char *delim){
   while((index+delim_length) < src_length){
     substring(src, index, index+delim_length, substring_result);
     if (compare(substring_result, delim)){
+        count_length ++ ;
+        index += delim_length;
         sprintf(spr, "index: %ld, src_length: %ld, delim_length: %ld, count_length: %ld"
         , index
         , src_length
@@ -96,8 +98,6 @@ int count(char *src, const char *delim){
         debug("count", spr);
         sprintf(spr, "count: s=%ld, e=%ld, %s, %s\n", index, index+delim_length, substring_result, delim);
         debug("count", spr);
-        index += delim_length;
-        count_length ++ ;
     }else{
         index ++;
     }
